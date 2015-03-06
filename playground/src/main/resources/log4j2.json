@@ -1,0 +1,42 @@
+{
+    "configuration": {
+        "status": "error",
+        "name": "logs",
+        "packages": "edu.mycourses",
+        "properties": {
+            "property": {
+                "name": "logPattern",
+                "value": "%d %p [%c] - %m%n"
+            }
+        },
+        "ThresholdFilter": {
+            "level": "all"
+        },
+        "appenders": {
+            "Console": {
+                "name": "stdout",
+                "PatternLayout": {
+                    "pattern": "${logPattern}"
+                }
+            }
+        },
+        "loggers": {
+            "logger": [
+                {
+                    "name": "edu.mycourses",
+                    "level": "DEBUG",
+                    "AppenderRef": {
+                        "ref": "stdout"
+                    },
+                    "additivity": "false"
+                }
+            ],
+            "root": {
+                "level": "ERROR",
+                "AppenderRef": {
+                    "ref": "stdout"
+                }
+            }
+        }
+    }
+}

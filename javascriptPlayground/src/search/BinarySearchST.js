@@ -3,18 +3,19 @@
  */
 BinarySearchST = function() {
 
-	var keys = [], values = [], me = this;
+	var keys = [], values = [], N = 0, me = this;
 
 	this.put = function(k, v) {
 		var i = me.rank(k);
 		if(i < keys.length && keys[i] === k)
 			values[i] = v;
-		for(var x = keys.length; x > i; x--){
+		for(var x = N; x > i; x--){
 			keys[x] = keys[x-1];
 			values[x] = values[x-1];
 		}
 		keys[i] = k; 
 		values[i] = v;
+		N++;
 	};
 
 	this.get = function(k) {

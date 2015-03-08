@@ -46,22 +46,31 @@ public class BinarySearchTreeST<Key extends Comparable<Key>, Value> implements O
 			return x.value;
 	}
 
+	private Node getNode(Node x, Key key) {
+		if (x == null)
+			return null;
+		int comp = key.compareTo(x.key);
+		if (comp < 0)
+			return getNode(x.left, key);
+		else if (comp > 0)
+			return getNode(x.right, key);
+		else
+			return x;
+	}
+
 	@Override
 	public void delete(Key key) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public boolean contains(Key key) {
-		// TODO Auto-generated method stub
-		return false;
+		return get(key) != null;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return size() == 0;
 	}
 
 	@Override
@@ -83,14 +92,28 @@ public class BinarySearchTreeST<Key extends Comparable<Key>, Value> implements O
 
 	@Override
 	public Key min() {
-		// TODO Auto-generated method stub
-		return null;
+		return min(root);
+	}
+
+	private Key min(Node x) {
+		if(x == null) return null;
+		Node left = x;
+		while(left.left != null)
+			left = left.left;
+		return left.key;
 	}
 
 	@Override
 	public Key max() {
-		// TODO Auto-generated method stub
-		return null;
+		return max(root);
+	}
+
+	private Key max(Node x) {
+		if(x == null) return null;
+		Node right = x;
+		while(right.right != null)
+			right = right.right;
+		return right.key;
 	}
 
 	@Override
@@ -107,13 +130,17 @@ public class BinarySearchTreeST<Key extends Comparable<Key>, Value> implements O
 
 	@Override
 	public int rank(Key key) {
-		// TODO Auto-generated method stub
-		return 0;
+		Node node = getNode(root, key);
+		return node == null ? 0 : node.N;
 	}
 
 	@Override
 	public Key select(int k) {
-		// TODO Auto-generated method stub
+		return select(root, k);
+	}
+
+	private Key select(Node x, int k) {
+		//if(x == null)
 		return null;
 	}
 

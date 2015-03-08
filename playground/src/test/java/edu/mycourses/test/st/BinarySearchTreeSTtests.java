@@ -38,7 +38,21 @@ public class BinarySearchTreeSTtests {
 		assertTrue(e != null);
 	}
 	
-	public void testRank() {
-		
+	@Test
+	public void testmin() {
+		Character min = st.min();
+		assertTrue(min != null);
+	}
+	
+	@Test
+	public void testmax() {
+		Character max = st.max();
+		assertTrue(max != null);
+	}
+	
+	@Test
+	public void testrank() {
+			int p = st.rank('p');
+		assertTrue(p < word.length());
 	}
 }

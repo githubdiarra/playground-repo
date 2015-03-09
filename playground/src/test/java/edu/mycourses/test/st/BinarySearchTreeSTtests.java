@@ -52,7 +52,25 @@ public class BinarySearchTreeSTtests {
 	
 	@Test
 	public void testrank() {
-			int p = st.rank('p');
+		int p = st.rank('x');
 		assertTrue(p < word.length());
+	}
+	
+	@Test
+	public void testselect() {
+		Character c = st.select(0);
+		assertTrue(c != null);
+	}
+	
+	@Test
+	public void testkeys() {
+		Iterable<Character> keys = st.keys();
+		assertTrue(keys.iterator().hasNext());
+	}
+	
+	@Test
+	public void testrangsize() {
+		int s = st.size('a', 'x');
+		assertTrue(s > 0);
 	}
 }

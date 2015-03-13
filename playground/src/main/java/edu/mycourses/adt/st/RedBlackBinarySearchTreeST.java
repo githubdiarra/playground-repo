@@ -10,26 +10,38 @@ import java.util.Queue;
 
 /**
  * @author Ibrahima Diarra
- *
+ * 
  */
-public class BinarySearchTreeST<Key extends Comparable<Key>, Value> implements OrderedST<Key, Value> {
-
+public class RedBlackBinarySearchTreeST<Key extends Comparable<Key>, Value> implements OrderedST<Key, Value> {
+	
 	private Node root;
+	private static final boolean RED = true;
+	private static final boolean BLACK = false;
 	
 	@Override
 	public void put(Key key, Value value) {
 		root = put(root, key, value);
+		root.color = BLACK;
 	}
 
 	private Node put(Node x, Key key, Value value) {
 		if (x == null)
-			return new Node(key, value, 1);
+			return new Node(key, value, 1, RED);
 		int comp = key.compareTo(x.key);
 		if (comp < 0)
 			x.left = put(x.left, key, value);
 		else if (comp > 0)
 			x.right = put(x.right, key, value);
-		else x.value = value;
+		else
+			x.value = value;
+		// Start Red-black operations
+		if (isRed(x.right) && !isRed(x.left))
+			x = rotateLeft(x);
+		if (isRed(x.left) && isRed(x.left.left))
+			x = rotateRight(x);
+		if (isRed(x.left) && isRed(x.right))
+			flipColors(x);
+		// End Red-black operations
 		x.N = size(x.left) + size(x.right) + 1;
 		return x;
 	}
@@ -94,7 +106,7 @@ public class BinarySearchTreeST<Key extends Comparable<Key>, Value> implements O
 	}
 
 	private int size(Node x) {
-		if(x == null)
+		if (x == null)
 			return 0;
 		return x.N;
 	}
@@ -112,9 +124,9 @@ public class BinarySearchTreeST<Key extends Comparable<Key>, Value> implements O
 	private Node min(Node x) {
 		if (x == null)
 			return null;
-		if(x.left == null) 
+		if (x.left == null)
 			return x;
-		else 
+		else
 			return min(x.left);
 	}
 
@@ -182,7 +194,6 @@ public class BinarySearchTreeST<Key extends Comparable<Key>, Value> implements O
 	public int rank(Key key) {
 		return rank(root, key);
 	}
-
 
 	private int rank(Node x, Key key) {
 		if (x == null)
@@ -263,21 +274,55 @@ public class BinarySearchTreeST<Key extends Comparable<Key>, Value> implements O
 		if (comphi > 0)
 			collectKeys(x.right, keys, lo, hi);
 	}
+
+	private Node rotateLeft(Node h) {
+		Node x = h.right;
+		h.right = x.left;
+		x.left = h;
+		x.color = h.color;
+		h.color = RED;
+		x.N = h.N;
+		h.N = 1 + size(h.left) + size(h.right);
+		return x;
+	}
 	
-	@Override
+	private Node rotateRight(Node h) {
+		Node x = h.left;
+		h.left = x.right;
+		x.right = h;
+		x.color = h.color;
+		h.color = RED;
+		x.N = h.N;
+		h.N = 1 + size(h.left) + size(h.right);
+		return x;
+	}
+	
+	private void flipColors(Node h) {
+		h.color = RED;
+		h.left.color = BLACK;
+		h.right.color = BLACK;
+	}
+	
+	private boolean isRed(Node x) {
+		if (x == null)
+			return false;
+		return x.color == RED;
+	}
+	
 	public void printByLevel() {
 		printByLevel(root);
 	}
-	
+
 	private void printByLevel(Node x) {
 		Queue<Node> nodes = new LinkedList<Node>();
 		nodes.add(x);
-		final Node blank = new Node(null, null, -1);
+		final Node blank = new Node(null, null, -1, BLACK);
 		nodes.add(blank);
 		int level = 1;
 		while (true) {
 			Node n = nodes.poll();
-			if(nodes.isEmpty()) break;
+			if (nodes.isEmpty())
+				break;
 			if (n == blank) {
 				nodes.add(blank);
 				level++;
@@ -290,19 +335,21 @@ public class BinarySearchTreeST<Key extends Comparable<Key>, Value> implements O
 			}
 		}
 	}
-	
-	private class Node{
-		
-		public Key key;
-		public Value value;
-		public Node left;
-		public Node right;
-		int N;
-		
-		public Node(Key key, Value value, int N) {
+
+	private class Node {
+
+		 Key key;
+		 Value value;
+		 Node left;
+		 Node right;
+		 int N;
+		 boolean color;
+
+		public Node(Key key, Value value, int N, boolean color) {
 			this.key = key;
 			this.value = value;
 			this.N = N;
+			this.color = color;
 		}
 
 		@Override
@@ -313,7 +360,8 @@ public class BinarySearchTreeST<Key extends Comparable<Key>, Value> implements O
 				builder.append("key=").append(key).append(", ");
 			if (value != null)
 				builder.append("value=").append(value).append(", ");
-			builder.append("N=").append(N).append("]");
+			builder.append("N=").append(N).append(", color=").append(color)
+					.append("]");
 			return builder.toString();
 		}
 	}

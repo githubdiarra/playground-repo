@@ -16,23 +16,35 @@ import edu.mycourses.adt.st.BinarySearchST;
  */
 public class BinarySearchSTtests {
 	
-	BinarySearchST<String, Integer> st = new BinarySearchST<String, Integer>(20);
+	BinarySearchST<Character, Integer> st = new BinarySearchST<Character, Integer>(20);
 	
 	@Before
 	public void init() {
-		st.put("grape", "grape".length());
-		st.put("mango", "mango".length());
-		st.put("Apple", "Apple".length());
+		char[] chars = "bcd".toCharArray();
+		for(int i = 0; i < chars.length; i++)
+			st.put(chars[i], i);
 	}
 	
 	@Test
 	public void testContains() {
-		assertTrue(st.contains("mango"));
+		assertTrue(st.contains('a'));
 	}
 	
 	@Test
 	public void testget() {
-		int mango = st.get("mango");
-		assertTrue(mango == "mango".length());
+		int mango = st.get('b');
+		assertTrue(mango >= 0);
+	}
+	
+	@Test
+	public void testceil() {
+		Character ceil = st.ceiling('j');
+		assertTrue(ceil != null && ceil >= 0);
+	}
+	
+	@Test
+	public void testfloor() {
+		Character floor = st.floor('a');
+		assertTrue(floor >= 0);
 	}
 }

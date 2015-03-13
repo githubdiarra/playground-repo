@@ -24,8 +24,14 @@ public interface OrderedST<Key extends Comparable<Key>, Value> extends ST<Key, V
 	void deleteMin();
 	
 	void deleteMax();
-	
+
 	int size(Key lo, Key hi);
 	
 	Iterable<Key> keys(Key lo, Key hi);
+	
+	/**
+	 * Optional method, for implementations with levels
+	 */
+	void printByLevel();
+	
 }

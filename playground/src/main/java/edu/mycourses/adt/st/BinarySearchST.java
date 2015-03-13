@@ -52,8 +52,9 @@ public class BinarySearchST<K extends Comparable<K>, V> implements OrderedST<K, 
 
 	@Override
 	public void delete(K key) {
-		// TODO Auto-generated method stub
-		
+		int i = rank(key);
+		keys[i] = null;
+		values[i] = null;
 	}
 
 	@Override
@@ -89,13 +90,20 @@ public class BinarySearchST<K extends Comparable<K>, V> implements OrderedST<K, 
 
 	@Override
 	public K floor(K key) {
-		// TODO Auto-generated method stub
+		int i = rank(key);
+		if (i < N && key.compareTo(keys[i]) == 0)
+			return key;
+		if (i - 1 >= 0)
+			return keys[i - 1];
 		return null;
 	}
 
 	@Override
 	public K ceiling(K key) {
-		return keys[rank(key)];
+		int i = rank(key);
+		if (i < N)
+			return keys[i];
+		return null;
 	}
 
 	@Override
@@ -163,5 +171,10 @@ public class BinarySearchST<K extends Comparable<K>, V> implements OrderedST<K, 
 							Math.min(keys.length, maxLen)));
 		builder.append("]");
 		return builder.toString();
+	}
+
+	@Override
+	public void printByLevel() {
+		// TODO Auto-generated method stub
 	}
 }

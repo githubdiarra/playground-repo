@@ -309,31 +309,56 @@ public class RedBlackBinarySearchTreeST<Key extends Comparable<Key>, Value> impl
 		return x.color == RED;
 	}
 	
+	@Override
 	public void printByLevel() {
 		printByLevel(root);
 	}
 
 	private void printByLevel(Node x) {
-		Queue<Node> nodes = new LinkedList<Node>();
-		nodes.add(x);
-		final Node blank = new Node(null, null, -1, BLACK);
-		nodes.add(blank);
+		Queue<Node> q = new LinkedList<Node>();
+		q.add(x);
+		q.add(null);
 		int level = 1;
-		while (true) {
-			Node n = nodes.poll();
-			if (nodes.isEmpty())
-				break;
-			if (n == blank) {
-				nodes.add(blank);
+		while (!q.isEmpty()) {
+			Node n = q.poll();
+			if (n == null) {
+				if (!q.isEmpty())
+					q.add(null);
 				level++;
 			} else {
 				System.out.println(level + "  " + n.key);
 				if (n.left != null)
-					nodes.add(n.left);
+					q.add(n.left);
 				if (n.right != null)
-					nodes.add(n.right);
+					q.add(n.right);
 			}
 		}
+	}
+	
+	public int height() {
+		return height(root);
+	}
+
+	private int height(Node x) {
+		Queue<Node> q = new LinkedList<Node>();
+		q.add(x);
+		q.add(null);
+		int height = 0;
+		while (!q.isEmpty()) {
+			Node n = q.poll();
+			if (n == null) {
+				if (!q.isEmpty()) {
+					height++;
+					q.add(null);
+				}
+			} else {
+				if (n.left != null)
+					q.add(n.left);
+				if (n.right != null)
+					q.add(n.right);
+			}
+		}
+		return height;
 	}
 
 	private class Node {

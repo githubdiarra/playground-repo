@@ -8,7 +8,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.mycourses.adt.st.OrderedST;
 import edu.mycourses.adt.st.RedBlackBinarySearchTreeST;
 
 /**
@@ -17,8 +16,7 @@ import edu.mycourses.adt.st.RedBlackBinarySearchTreeST;
  */
 public class BinarySearchTreeSTtests {
 
-	OrderedST<Character, Integer> st = new RedBlackBinarySearchTreeST<Character, Integer>();
-	//OrderedST<Character, Integer> st = new BinarySearchTreeST<Character, Integer>();
+	RedBlackBinarySearchTreeST<Character, Integer> st = new RedBlackBinarySearchTreeST<Character, Integer>();
 	final String word = "searchexample";
 	//final String word = "abcdefghijklmnopqrstuvwxyz";
 	//final String word = "cba";
@@ -107,5 +105,11 @@ public class BinarySearchTreeSTtests {
 	@Test
 	public void testprintlevel() {
 		st.printByLevel();
+	}
+	
+	@Test
+	public void testprintHeight() {
+		int h = st.height();
+		System.out.println("height: " + h);
 	}
 }

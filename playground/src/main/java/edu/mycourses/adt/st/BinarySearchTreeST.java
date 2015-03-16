@@ -263,7 +263,7 @@ public class BinarySearchTreeST<Key extends Comparable<Key>, Value> implements O
 		if (comphi > 0)
 			collectKeys(x.right, keys, lo, hi);
 	}
-	
+
 	@Override
 	public void printByLevel() {
 		printByLevel(root);

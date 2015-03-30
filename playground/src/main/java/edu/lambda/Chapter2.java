@@ -6,7 +6,7 @@ package edu.lambda;
 /**
  * @author Ibrahima Diarra
  *
- *Understanding Git
+ * Commit and pushing in Git
  */
 public class Chapter2 {
 	

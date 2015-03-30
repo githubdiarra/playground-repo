@@ -6,6 +6,7 @@ package edu.lambda;
 /**
  * @author Ibrahima Diarra
  *
+ *Understanding Git
  */
 public class Chapter2 {
 	

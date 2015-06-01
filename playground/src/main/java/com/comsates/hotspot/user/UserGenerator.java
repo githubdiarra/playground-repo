@@ -13,6 +13,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * This class is used to generate hotspot tokens.
+ * 
  * @author Ibrahima Diarra
  *
  */
